@@ -1,3 +1,4 @@
+import helmet from 'helmet';
 import { z } from 'zod';
 import {v4 as uuidv4} from 'uuid'
 import cookieParser from 'cookie-parser'
@@ -5,6 +6,8 @@ import express , {Request,Response} from 'express'
 import {client} from './redisConnection';
 const app = express();
 const port = 3000;
+app.use(helmet());
+app.use(helmet.frameguard({ action: 'deny' }));
 app.use(cookieParser())
 app.use(express.json());
  const loginRequestSchema = z.object({
