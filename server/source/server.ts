@@ -15,7 +15,7 @@ app.use(express.json());
   });
 
 type LoginRequest = z.infer<typeof loginRequestSchema>;
-app.post('/login',async(req: Request,res: Response)=>{
+app.post('/signup',async(req: Request,res: Response)=>{
 const parsedResult = loginRequestSchema.safeParse(req.body);
 const {email} = parsedResult.data as LoginRequest;
 const uuid = uuidv4();
