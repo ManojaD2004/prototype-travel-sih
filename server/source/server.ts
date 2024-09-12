@@ -1,9 +1,11 @@
 import { z } from 'zod';
 import {v4 as uuidv4} from 'uuid'
+import cookieParser from 'cookie-parser'
 import express , {Request,Response} from 'express'
 import {client} from './redisConnection';
 const app = express();
 const port = 3000;
+app.use(cookieParser())
 app.use(express.json());
  const loginRequestSchema = z.object({
    email: z.string().email()
@@ -35,8 +37,14 @@ catch (err) {
     res.status(500).json({ error: 'Server Error :( ' });
   }
 })
-app.get('/hello/:sessionId', async (req: Request, res: Response) => {
-  const { sessionId } = req.params;
+app.get('/hello', async (req: Request, res: Response) => {
+  const sessionId = req.cookies.sessionId;
+  console.log(sessionId);
+
+  if(!sessionId)
+  {
+    return res.status(404).json({message : "SessionId cookie is missing :("});
+  }
   const key = `user-session:${sessionId}`;
 
   try {
