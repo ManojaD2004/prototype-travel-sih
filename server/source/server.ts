@@ -2,7 +2,7 @@ import helmet from 'helmet';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid'
 import cookieParser from 'cookie-parser'
-import express, { Request, Response } from 'express'
+import express from 'express'
 import { client } from './redisConnection';
 const app = express();
 const port = 3000;
@@ -15,7 +15,7 @@ const loginRequestSchema = z.object({
 });
 
 type LoginRequest = z.infer<typeof loginRequestSchema>;
-app.post('/signup', async (req: Request, res: Response) => {
+app.post('/login', async (req, res) => {
   const parsedResult = loginRequestSchema.safeParse(req.body);
   const { email } = parsedResult.data as LoginRequest;
   const uuid = uuidv4();
@@ -40,7 +40,7 @@ app.post('/signup', async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Server Error :( ' });
   }
 })
-app.get('/hello', async (req: Request, res: Response) => {
+app.get('/hello', async (req, res) => {
   const sessionId = req.cookies.sessionId;
   console.log(sessionId);
 
