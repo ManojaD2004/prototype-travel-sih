@@ -1,9 +1,13 @@
+"use client"
 import Image from 'next/image'
 import Link from 'next/link'
 import { Search, User } from 'lucide-react'
 import logo from "./assets/assets/logo.png"
 
+import { useRouter } from 'next/navigation'
+
 export default function NavBar() {
+const router=useRouter()
     return (
         <nav className="flex flex-col md:flex-row items-center justify-between gap-20 mb-8">
             {/* Left Container */}
@@ -24,8 +28,8 @@ export default function NavBar() {
                         <li className="font-semibold text-xl text-white hover:text-gray-500 transition-colors duration-300">
                             <Link href="#">Contact Us</Link>
                         </li>
-                        <li className="font-semibold text-xl text-white hover:text-gray-500 transition-colors duration-300">
-                            <Link href="#">Blog</Link>
+                        <li className="font-semibold text-xl text-white hover:text-gray-500 transition-colors duration-300 cursor-pointer" onClick={()=>{router.push('/camera')}}>
+                            <div onClick={()=>{router.push('/camera')}} >Camera</div>
                         </li>
                     </ul>
                 </div>
